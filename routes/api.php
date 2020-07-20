@@ -22,6 +22,7 @@ Route::delete('clients/{id}', "ClientController@delete");
 Route::put('clients/{id}', 'ClientController@update');
 Route::get('clients/{id}', 'ClientController@read');
 Route::get('clients', 'ClientController@readAll');
+Route::get('clients/getBy', 'ClientController@readAndFilter');
 
 Route::post('professionals', "ProfessionalController@create");
 Route::delete('professionals/{id}', "ProfessionalController@delete");

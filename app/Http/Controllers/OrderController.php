@@ -50,9 +50,10 @@ class OrderController extends Controller
             ], 404);
          }
     }
+
     public function read ($id){
         if (Order::where('id', $id)->exists()) {
-            $order = Order::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+            $order = Order::where('id', $id)->get();
             return response($order, 200);
 
           } else {
@@ -62,6 +63,15 @@ class OrderController extends Controller
           }
         return response()->json($order,  200);
     }
+
+    public function readAndFilter (Request $request){
+        $orders = Order::all();
+        foreach($request->getAttributes() as $key => $value ) {
+            $orders = $orders->where($key, $value);
+        }
+        return response()->json($orders,  200);
+    }
+
     public function readAll (){
         $order = Order::all();
         return response()->json($order, 200);

@@ -26,7 +26,7 @@ class AdressController extends Controller
         $endereço->cep = $request->novo_endereco_cep;
         $endereço->estado =  is_null($request->novo_endereco_estado) ? $cepData->uf : $request->novo_endereco_estado;
         $endereço->cidade =  is_null($request->novo_endereco_cidade) ? $cepData->localidade : $request->novo_endereco_cidade;
-
+        $endereço->user_id = $client->id;
         $endereço->pais = is_null($request->novo_endereco_pais) ? "Brasil" : $request->novo_endereco_pais;
         $endereço->numero = $request->novo_endereco_numero;
         $endereço->complemento = is_null($request->novo_endereco_complemento) ? $cepData->complemento : $request->novo_endereco_complemento;
