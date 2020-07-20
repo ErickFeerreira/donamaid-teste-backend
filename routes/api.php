@@ -35,4 +35,4 @@ Route::delete('orders/{id}', "OrderController@delete");
 Route::put('orders/{id}', 'OrderController@update');
 Route::get('orders/{id}', 'OrderController@read');
 Route::get('orders', 'OrderController@readAll');
-Route::get('orders/getBy', 'OrderController@readAndFilter');
+Route::get('ordersby', 'OrderController@readAndFilter');
