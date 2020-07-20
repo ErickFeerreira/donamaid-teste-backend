@@ -66,7 +66,7 @@ class OrderController extends Controller
 
     public function readAndFilter (Request $request){
         $orders = Order::all();
-        foreach($request->getAttributes() as $key => $value ) {
+        foreach($request->all() as $key => $value ) {
             $orders = $orders->where($key, $value);
         }
         return response()->json($orders,  200);
