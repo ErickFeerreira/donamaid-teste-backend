@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserIdToAdresses extends Migration
+class AddStatusToOrders extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserIdToAdresses extends Migration
      */
     public function up()
     {
-        Schema::table('adresses', function (Blueprint $table) {
-            $table->integer('user_id');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('status');
         });
     }
 
@@ -25,7 +25,7 @@ class AddUserIdToAdresses extends Migration
      */
     public function down()
     {
-        Schema::table('adresses', function (Blueprint $table) {
+        Schema::table('orders', function (Blueprint $table) {
             //
         });
     }
