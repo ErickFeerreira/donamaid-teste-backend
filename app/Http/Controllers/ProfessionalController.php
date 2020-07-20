@@ -13,9 +13,9 @@ class ProfessionalController extends Controller
         
         if (Professional::where('cpf', $request->cpf)->exists()) $errorMsg['errors']['cpf.exists'] = 'Este cpf já está cadastrado.';
         
-        if (!isset($request->email )) $errorMsg['errors']['email.undefined'] = 'Você não escreveu um e-mail';
-        if (!isset($request->cpf )) $errorMsg['errors']['cpf.undefined'] = 'Você não escreveu um cpf';
-        if (!isset($request->nome )) $errorMsg['errors']['nome.undefined'] = 'Você não escreveu um nome';
+        if (!isset($request->email )) $errorMsg['errors']['email.undefined'] = 'Você não informou um e-mail';
+        if (!isset($request->cpf )) $errorMsg['errors']['cpf.undefined'] = 'Você não informou um cpf';
+        if (!isset($request->nome )) $errorMsg['errors']['nome.undefined'] = 'Você não informou um nome';
 
        
         if (!empty($errorMsg['errors'])){

@@ -17,10 +17,10 @@ class ClientController extends Controller
         
         if (Client::where('cpf', $request->cpf)->exists()) $messages['errors']['cpf.exists'] = 'Este cpf já está cadastrado.';
         
-        if (!isset($request->email )) $messages['errors']['email.undefined'] = 'Você não escreveu um e-mail';
+        if (!isset($request->email )) $messages['errors']['email.undefined'] = 'Você não informou um e-mail';
         
-        if (!isset($request->cpf )) $messages['errors']['cpf.undefined'] = 'Você não escreveu um cpf';
-        if (!isset($request->nome )) $messages['errors']['nome.undefined'] = 'Você não escreveu um nome';
+        if (!isset($request->cpf )) $messages['errors']['cpf.undefined'] = 'Você não informou um cpf';
+        if (!isset($request->nome )) $messages['errors']['nome.undefined'] = 'Você não informou um nome';
         if (!empty($messages['errors'])){
             return response()->json($messages, 200);
         }
