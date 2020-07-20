@@ -18,7 +18,7 @@ class OrderController extends Controller
             $errorMsg['errors']['dia.undefined'] = 'Você não informou o Dia do Contrato';
         } else {
             $dataTyped = explode("/", $request->dia);
-            $newformatDate = $dataTyped[2]."-".$dataTyped[0]."-".$dataTyped[1];
+            $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];
 
         }
         if (!isset($request->duracao )) $errorMsg['errors']['duracao.undefined'] = 'Você não informou a Duração do Contrato';
