@@ -77,14 +77,16 @@ class AdressController extends Controller
             if ((!is_null($request->cep) && !is_null($request->numero))){   
                 $cepResponse = \Canducci\Cep\Facades\Cep::find($request->cep);
 
-                if ($cepResponse->isOk()) 
-                {
+                if ($cepResponse->isOk()){
+
+                    $cepData = $cepResponse->getCepModel();
                     $adress->cidade = $cepResponse->localidade;
                     $adress->pais = "Brasil";
                     $adress->rua = $cepResponse->logradouro;
                     $adress->numero = $request->numero;
                     $adress->complemento = is_null($request->complemento) ? $adress->complemento : $request->complemento;
                     $adress->estado = $cepResponse->uf;
+                    
                 } else {
                     $messages['errors']['cep.unknown'] = 'CEP não encontrado';
                     return response()->json($messages, 409);
