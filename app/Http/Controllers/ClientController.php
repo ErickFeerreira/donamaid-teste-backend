@@ -48,7 +48,7 @@ class ClientController extends Controller
         }
         $messages['success']['client.created'] = 'Você foi registrado com sucesso!';
         
-        return response()->json([$client, $successMsg], 201);
+        return response()->json([$client, $messages], 201);
     }
     public function delete ($id) {
         $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
