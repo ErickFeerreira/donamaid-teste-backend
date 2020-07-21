@@ -68,10 +68,13 @@ class OrderController extends Controller
         $orders = Order::all();
         $msg['msg'] = array();
         $r = $request->all();
-        foreach($r as $value => $key)
+        foreach($order->getAttributes() as $key => $value )
         {
-            $msg['msg'][$value] = $key;
-            if (!is_null($key)) $orders = $orders->where($value, $key);
+            if (isset($request->$key)){
+                $orders = $orders->where($key, $value);
+                $msg['msg'][$key] = $value;
+
+            }
         }
         return response()->json([$orders, $msg],  200);
     }
