@@ -85,7 +85,7 @@ class OrderController extends Controller
         if (isset($request->dia) && !is_null($request->dia)){
             $dataTyped = explode("/", $request->dia);
             $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];
-            $orders = $orders->where('dia', '=', $newformatDate);
+            $orders = $orders->where('dia', '=', date('Y-m-d', strtotime($newformatDate)));
         } 
         return response()->json($orders,  200);
     }
