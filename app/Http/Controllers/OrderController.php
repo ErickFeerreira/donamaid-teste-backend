@@ -82,6 +82,10 @@ class OrderController extends Controller
             $profissional = $request->profissional;
             $orders = $orders->where('profissional', $profissional);
         }
+        if (isset($request->endereco) && !is_null($request->endereco)) {
+            $endereco = $request->endereco;
+            $orders = $orders->where('endereco', $endereco);
+        }
         if (isset($request->dia) && !is_null($request->dia)){
             $dataTyped = explode("/", $request->dia);
             $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];

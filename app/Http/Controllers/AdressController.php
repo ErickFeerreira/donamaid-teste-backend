@@ -15,11 +15,8 @@ class AdressController extends Controller
         if (!isset($request->cep)) $messages['errors']['cep.undefined'] = 'Você não informou um CEP';
         if (!isset($request->numero)) $messages['errors']['numero.undefined'] = 'Você não informou o Número da residência';
         if (!isset($request->user_id)) $messages['errors']['cliente.undefined'] = 'Você não informou a que Cliente pertence este endereço.';
+        if (! Client::where('id', $request->user_id)->exists()) $messages['errors']['client.unknown'] = "Não há Cliente com este ID";
         if (!empty($messages['errors'])) return response()->json($messages, 409);
-        if (! Client::where('id', $request->user_id)->exists()) {
-            $messages['errors']['client.unknown'] = "Não há Cliente com este ID";
-            return response()->json($messages, 404);
-        }
 
         $client = Client::find($request->user_id);
 
@@ -71,37 +68,51 @@ class AdressController extends Controller
     public function update(Request $request, $id) {
         $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
 
-        if (Client::where('id', $id)->exists()) {
-            $client = Client::find($id);
-            $client->nome = is_null($request->nome) ? $client->nome : $request->nome;
-            $client->email = is_null($request->email) ? $client->email : $request->email;
-            $client->enderecos = is_null($request->enderecos) ? $client->enderecos : $request->enderecos;
+        if (Adress::where('id', $id)->exists()) {
+            $adress = Adress::find($id);
+            
 
-            if ((!is_null($request->novo_endereco_cep) && !is_null($request->novo_endereco_numero))){  
-     
-                $cepResponse = \Canducci\Cep\Facades\Cep::find($request->novo_endereco_cep );
+            // (A . B) + (A . nãoB) + X = 1 --> X = nãoA
+            //Se foi informado um CEP e um Numero -> (Preenchimento automático)
+            if ((!is_null($request->cep) && !is_null($request->numero))){   
+                $cepResponse = \Canducci\Cep\Facades\Cep::find($request->cep);
 
-                if ($cepResponse->isOk()) {
-                   AdressController::createNewAdressToClient($client, $request, $cepResponse);
+                if ($cepResponse->isOk()) 
+                {
+                    AdressController::createNewAdressToClient($client, $request, $cepResponse);
+                    $adress->cidade = $cepResponse->localidade;
+                    $adress->pais = "Brasil";
+                    $adress->rua = $cepResponse->logradouro;
+                    $adress->numero = $request->numero;
+                    $adress->complemento = is_null($request->complemento) ? $adress->complemento : $request->complemento;
+                    $adress->estado = $cepResponse->uf;
                 } else {
-                    $messages['errors']['cep.unknown'] = "CEP não encontrado";
-                    return response()->json([
-                        $messages, $client
-                    ], 409);               
-                 }
+                    $messages['errors']['cep.unknown'] = 'CEP não encontrado';
+                    return response()->json($messages, 409);
+                }
+
+            //Se foi informado um CEP mas não um Numero -> (Erro)
+            } else if ((!is_null($request->cep) && is_null($request->numero))){
+                $messages['errors']['cep.unknown'] = 'Você informou um CEP mas não o número de sua residência. Ambos são necessários para o registro devido do seu endereço';
+                return response()->json($messages, 409);
+    
+            //Se não foi informado um CEP   
+            } else {
+                $adress->rua = is_null($request->rua) ? $adress->rua : $request->rua;
+                $adress->numero = is_null($request->numero) ? $adress->numero : $request->numero;
+                $adress->complemento = is_null($request->complemento) ? $adress->complemento : $request->complemento;
 
             }
+            $adress->save();
+            $messages['success']['adress.updated'] = "Dados do Endereço atualizados com sucesso";
 
-            $messages['success']['adress.updated'] = "Os dados deste Endereço foram atualizados com sucesso";
-           
-            return response()->json([$messages, $client], 200);
-        } else {    
-            $messages['errors']['adress.unknown'] = "Não há Endereço com este ID.";
- 
-            return response()->json($messages, 404);  
+            return response()->json([$messages, $adress], 200);
+        } else {
+                $messages['errors']['adress.unknown'] = "Não há Endereço com este ID.";
+                return response()->json($messages, 404);
         }
     }
-    
+
     //---- //--// ---- //
 
     public static function createNewAdressToClient ($client, $request, $cepResponse){
