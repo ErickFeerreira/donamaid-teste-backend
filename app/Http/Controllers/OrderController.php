@@ -83,7 +83,7 @@ class OrderController extends Controller
             $dia = $request->dia;
             $orders = $orders::where('dia', $dia)->get();
         } 
-        return response()->json($orders,  200);
+        return response()->json($request,  200);
     }
 
     public function readAll (){
