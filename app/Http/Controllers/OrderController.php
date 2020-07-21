@@ -66,22 +66,22 @@ class OrderController extends Controller
 
     public function readAndFilter (Request $request){
         $status; $cliente; $profissional; $dia;
-        $orders = Order::all();
+        $orders = Order::get();
         if (isset($request->cliente) && !is_null($request->cliente)) {
             $cliente = $request->cliente;
-            $orders = $orders::where('cliente', $cliente);
+            $orders = $orders::where('cliente', $cliente)->get();
         }
         if (isset($request->status) && !is_null($request->status)) {
             $status = $request->status;
-            $orders = $orders::where('status', $status);
+            $orders = $orders::where('status', $status)->get();
         }
         if (isset($request->profissional) && !is_null($request->profissional)) {
             $profissional = $request->profissional;
-            $orders = $orders::where('profissional', $profissional);
+            $orders = $orders::where('profissional', $profissional)->get();
         }
         if (isset($request->dia) && !is_null($request->dia)){
             $dia = $request->dia;
-            $orders = $orders::where('dia', $dia);
+            $orders = $orders::where('dia', $dia)->get();
         } 
         return response()->json($orders,  200);
     }
