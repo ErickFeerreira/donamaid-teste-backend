@@ -68,7 +68,7 @@ class OrderController extends Controller
         $orders = Order::all();
         $msg['msg'] = array();
         $r = $request->all();
-        foreach($order->getAttributes() as $key => $value )
+        foreach($orders->getAttributes() as $key => $value )
         {
             if (isset($request->$key)){
                 $orders = $orders->where($key, $value);
