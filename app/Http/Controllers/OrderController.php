@@ -69,19 +69,19 @@ class OrderController extends Controller
         $orders = Order::all();
         if (isset($request->cliente) && !is_null($request->cliente)) {
             $cliente = $request->cliente;
-            $orders = $orders::where('cliente', $cliente);
+            $orders = $orders::where('cliente', $cliente)->all();
         }
         if (isset($request->status) && !is_null($request->status)) {
             $status = $request->status;
-            $orders = $orders::where('status', $status);
+            $orders = $orders::where('status', $status)->all();
         }
         if (isset($request->profissional) && !is_null($request->profissional)) {
             $profissional = $request->profissional;
-            $orders = $orders::where('profissional', $profissional);
+            $orders = $orders::where('profissional', $profissional)->all();
         }
         if (isset($request->dia) && !is_null($request->dia)){
             $dia = $request->dia;
-            $orders = $orders::where('dia', $dia);
+            $orders = $orders::where('dia', $dia)->all();
         } 
         return response()->json($orders,  200);
     }
