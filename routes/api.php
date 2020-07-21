@@ -28,7 +28,7 @@ Route::post('professionals', "ProfessionalController@create");
 Route::delete('professionals/{id}', "ProfessionalController@delete");
 Route::put('professionals/{id}', 'ProfessionalController@update');
 Route::get('professionals/{id}', 'ProfessionalController@read');
-Route::get('professionals/getidle', 'ProfessionalController@getIdle');
+Route::get('idleprofessionals', 'ProfessionalController@getIdle');
 
 Route::get('professionals', 'ProfessionalController@readAll');
 
