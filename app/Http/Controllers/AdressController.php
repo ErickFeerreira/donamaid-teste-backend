@@ -79,7 +79,6 @@ class AdressController extends Controller
 
                 if ($cepResponse->isOk()) 
                 {
-                    AdressController::createNewAdressToClient($client, $request, $cepResponse);
                     $adress->cidade = $cepResponse->localidade;
                     $adress->pais = "Brasil";
                     $adress->rua = $cepResponse->logradouro;
