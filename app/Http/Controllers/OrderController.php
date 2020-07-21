@@ -66,10 +66,12 @@ class OrderController extends Controller
 
     public function readAndFilter (Request $request){
         $orders = Order::all();
+        $msg['msg'] = array();
         foreach($request->all() as $key => $value ) {
+            $msg['msg'][$key] = $value;
             if (!is_null($value)) $orders = $orders->where($key, $value);
         }
-        return response()->json($orders,  200);
+        return response()->json([$orders, $msg],  200);
     }
 
     public function readAll (){
