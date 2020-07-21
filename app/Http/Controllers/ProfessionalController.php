@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Professional;
+use App\Order;
 class ProfessionalController extends Controller
 {
     public function create (Request $request){
