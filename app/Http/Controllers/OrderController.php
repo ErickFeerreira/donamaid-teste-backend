@@ -10,56 +10,59 @@ use App\Professional;
 class OrderController extends Controller
 {
     public function create (Request $request){
-        $errorMsg = array(); 
-        $errorMsg['errors'] = array();
+        $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
+
         $newformatDate;
-        if (!isset($request->horario_inicial)) $errorMsg['errors']['horario.undefined'] = 'Você não informou o Horario marcado para realização do Contrato';
+        if (!isset($request->horario_inicial)) $messages['errors']['horario.undefined'] = 'Você não informou o Horario marcado para realização do Contrato';
         if (!isset($request->dia )) {
-            $errorMsg['errors']['dia.undefined'] = 'Você não informou o Dia do Contrato';
+            $messages['errors']['dia.undefined'] = 'Você não informou o Dia do Contrato';
         } else {
             $dataTyped = explode("/", $request->dia);
             $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];
 
         }
-        if (!isset($request->duracao )) $errorMsg['errors']['duracao.undefined'] = 'Você não informou a Duração do Contrato';
-        if (!isset($request->endereco )) $errorMsg['errors']['endereco.undefined'] = 'Você não não informou o ID de um Endereço';
-        if (!isset($request->cliente )) $errorMsg['errors']['cliente.undefined'] = 'Você não informou o ID de um Cliente';
-        if (!isset($request->profissional )) $errorMsg['errors']['profissional.undefined'] = 'Você não informou o ID de um Profissional';
+        if (!isset($request->duracao ))  $messages['errors']['duracao.undefined'] = 'Você não informou a Duração do Contrato';
+        if (!isset($request->endereco )) $messages['errors']['endereco.undefined'] = 'Você não não informou o ID de um Endereço';
+        if (!isset($request->cliente )) $messages['errors']['cliente.undefined'] = 'Você não informou o ID de um Cliente';
+        if (!isset($request->profissional )) $messages['errors']['profissional.undefined'] = 'Você não informou o ID de um Profissional';
 
        
-        if (!empty($errorMsg['errors'])){
-            return response()->json($errorMsg, 200);
+        if (!empty($messages['errors'])){
+            return response()->json($messages, 409);
         }
         $order = new Order;
         $order->fill($request->all());
         $order->dia = $newformatDate;
         $order->horario_inicial = $request->horario_inicial;
         $order->save();
-        return response()->json($order, 200);
+        $messages['success']['order.created'] = 'Seu Pedido de Limpeza foi agendado!';
+
+        return response()->json([$messages, $order], 201);
     }
     public function delete ($id) {
+        $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
+
         if (Order::where('id', $id)->exists()){
             $order = Order::where('id', $id)->first();
             $order->delete();
-            return response()->json([
-                "message" => "Contrato de ID ".$id." foi deletado com sucesso"
-            ], 200);
+            $messages['success']['order.deleted'] = "Contrato de ID ".$id." foi deletado com sucesso";
+            return response()->json($messages, 200);
          } else {
-            return response()->json([
-                "error" => "Não há Contrato com este ID"
-            ], 404);
+            $messages['errors']['order.unknown'] = "Não há Contrato com este ID";
+            return response()->json($messages, 404);
          }
     }
 
     public function read ($id){
+        $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
+
         if (Order::where('id', $id)->exists()) {
             $order = Order::where('id', $id)->get();
             return response($order, 200);
 
           } else {
-            return response()->json([
-              "error" => "Não há Contrato com este ID."
-            ], 404);
+            $messages['errors']['order.unknown'] = "Não há Contrato com este ID.";
+            return response()->json($messages, 404);
           }
         return response()->json($order,  200);
     }
@@ -80,8 +83,9 @@ class OrderController extends Controller
             $orders = $orders->where('profissional', $profissional);
         }
         if (isset($request->dia) && !is_null($request->dia)){
-            $dia = $request->dia;
-            $orders = $orders->where('dia', $dia);
+            $dataTyped = explode("/", $request->dia);
+            $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];
+            $orders = $orders->where('dia', '=', $newformatDate);
         } 
         return response()->json($orders,  200);
     }
@@ -92,23 +96,22 @@ class OrderController extends Controller
         
     }
     public function update(Request $request, $id) {
-        $errorMsg = array(); 
-        $errorMsg['errors'] = array();
+        $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
         
         if (!is_null($request->endereco) && !Adress::where('id', $request->endereco)->exists()){
-            $errorMsg['errors']['adress.unknown'] = 'Este Endereço não está cadastrado';
+            $messages['errors']['adress.unknown'] = 'Este Endereço não está cadastrado';
 
         }
         if (!is_null($request->profissional) && !Professional::where('id', $request->profissional)->exists()){
-            $errorMsg['errors']['professional.unknown'] = 'Este Profissional não está cadastrado';
+            $messages['errors']['professional.unknown'] = 'Este Profissional não está cadastrado';
 
         }
         if (!is_null($request->cliente) && !Client::where('id', $request->cliente)->exists()){
-            $errorMsg['errors']['client.unknown'] = 'Este Cliente não está cadastrado';
+            $messages['errors']['client.unknown'] = 'Este Cliente não está cadastrado';
 
         }
-        if (!empty($errorMsg['errors'])){
-            return response()->json($errorMsg, 200);
+        if (!empty($messages['errors'])){
+            return response()->json($messages, 409);
         }
         if (Order::where('id', $id)->exists()) {
             $order = Order::find($id);
@@ -121,14 +124,13 @@ class OrderController extends Controller
             $order->status = is_null($request->status) ?  $order->status : $request->status;
 
             $order->save();
-    
-            return response()->json([
-                "message" => "Dados do Contrato atualizados com sucesso", $order
-            ], 200);
+            $messages['success']['order.updated'] = "Dados do Contrato atualizados com sucesso";
+            return response()->json([$messages, $order], 200);
             } else {
-            return response()->json([
-                "message" => "Não há Contrato com este ID"
-            ], 404);
+                $messages['errors']['order.unknown'] = "Não há Contrato com este ID.";
+                return response()->json([
+                    "message" => "Não há Contrato com este ID"
+                ], 404);
             
         }
     }
