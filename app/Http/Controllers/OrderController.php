@@ -117,11 +117,15 @@ class OrderController extends Controller
             $order = Order::find($id);
             $order->endereco = is_null($request->endereco) ? $order->endereco : $request->endereco;
             $order->duracao = is_null($request->duracao) ?  $order->duracao : $request->duracao;
-            $order->dia = is_null($request->dia) ?  $order->dia : $request->dia;
             $order->horario_inicial = is_null($request->horario) ?  $order->horario_inicial : $request->horario;
             $order->cliente = is_null($request->cliente) ?  $order->cliente : $request->cliente;
             $order->profissional = is_null($request->profissional) ?  $order->profissional : $request->profissional;
             $order->status = is_null($request->status) ?  $order->status : $request->status;
+            if (!is_null($request->dia)){
+                $dataTyped = explode("/", $request->dia);
+                $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];
+                $order->dia =  $newformatDate;
+            }
 
             $order->save();
             $messages['success']['order.updated'] = "Dados do Contrato atualizados com sucesso";
