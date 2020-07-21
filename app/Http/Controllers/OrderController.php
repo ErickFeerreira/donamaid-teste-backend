@@ -65,7 +65,7 @@ class OrderController extends Controller
     }
 
     public function readAndFilter (Request $request){
-        $orders = Order::all();
+        $orders = Order::get();
         $msg['msg'] = array();
         $r = $request->all();
         foreach($orders->getAttributes() as $key => $value )
