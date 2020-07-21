@@ -14,7 +14,7 @@ class AddStatusToOrders extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('status');
+            $table->integer('status');
         });
     }
 

@@ -104,6 +104,7 @@ class OrderController extends Controller
             $order->horario_inicial = is_null($request->horario) ?  $order->horario_inicial : $request->horario;
             $order->cliente = is_null($request->cliente) ?  $order->cliente : $request->cliente;
             $order->profissional = is_null($request->profissional) ?  $order->profissional : $request->profissional;
+            $order->status = is_null($request->status) ?  $order->status : $request->status;
 
             $order->save();
     
