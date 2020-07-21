@@ -65,18 +65,25 @@ class OrderController extends Controller
     }
 
     public function readAndFilter (Request $request){
-        $orders = Order::get();
-        $msg['msg'] = array();
-        $r = $request->all();
-        foreach($orders->getAttributes() as $key => $value )
-        {
-            if (isset($request->$key)){
-                $orders = $orders->where($key, $value);
-                $msg['msg'][$key] = $value;
-
-            }
+        $status; $cliente; $profissional; $dia;
+        $orders = Order::all();
+        if (is_nul($request->cliente)) {
+            $cliente = $request->cliente;
+            $orders = $orders::where('cliente', $cliente);
         }
-        return response()->json([$orders, $msg],  200);
+        if (is_nul($request->status)) {
+            $status = $request->status;
+            $orders = $orders::where('status', $status);
+        }
+        if (is_nul($request->profissional)) {
+            $profissional = $request->profissional;
+            $orders = $orders::where('profissional', $profissional);
+        }
+        if (is_nul($request->dia)){
+            $dia = $request->dia;
+            $orders = $orders::where('dia', $dia);
+        } 
+        return response()->json($orders,  200);
     }
 
     public function readAll (){
