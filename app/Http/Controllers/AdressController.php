@@ -80,13 +80,13 @@ class AdressController extends Controller
                 if ($cepResponse->isOk()){
 
                     $cepData = $cepResponse->getCepModel();
-                    $adress->cidade = $cepResponse->localidade;
+                    $adress->cidade = $cepData->localidade;
                     $adress->pais = "Brasil";
-                    $adress->rua = $cepResponse->logradouro;
+                    $adress->rua = $cepData->logradouro;
                     $adress->numero = $request->numero;
                     $adress->complemento = is_null($request->complemento) ? $adress->complemento : $request->complemento;
-                    $adress->estado = $cepResponse->uf;
-                    
+                    $adress->estado = $cepData->uf;
+
                 } else {
                     $messages['errors']['cep.unknown'] = 'CEP não encontrado';
                     return response()->json($messages, 409);
