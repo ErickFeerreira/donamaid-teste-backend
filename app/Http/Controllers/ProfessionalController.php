@@ -72,5 +72,10 @@ class ProfessionalController extends Controller
                 return response()->json($messages, 404);
             
         }
+
+    }
+    public function getIdle(){
+        $waitingProfessionals = Order::where('status', "!=", "0")->pluck('profissional')->toArray();
+        return response()->json(Professional::whereNotIn('id', $waitingProfessionals )->get(), 200);
     }
 }
