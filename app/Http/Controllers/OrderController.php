@@ -67,19 +67,19 @@ class OrderController extends Controller
     public function readAndFilter (Request $request){
         $status; $cliente; $profissional; $dia;
         $orders = Order::all();
-        if (is_nul($request->cliente)) {
+        if (isset($request->cliente) && !is_null($request->cliente)) {
             $cliente = $request->cliente;
             $orders = $orders::where('cliente', $cliente);
         }
-        if (is_nul($request->status)) {
+        if (isset($request->status) && !is_null($request->status)) {
             $status = $request->status;
             $orders = $orders::where('status', $status);
         }
-        if (is_nul($request->profissional)) {
+        if (isset($request->profissional) && !is_null($request->profissional)) {
             $profissional = $request->profissional;
             $orders = $orders::where('profissional', $profissional);
         }
-        if (is_nul($request->dia)){
+        if (isset($request->dia) && !is_null($request->dia)){
             $dia = $request->dia;
             $orders = $orders::where('dia', $dia);
         } 
