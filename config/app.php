@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Canducci\Cep\Providers\CepServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -227,8 +228,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Cep' => Canducci\Cep\Facades\Cep::class,
-        'Endereco' => Canducci\Cep\Facades\Endereco::class
-
+        'Endereco' => Canducci\Cep\Facades\Endereco::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class, 
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class
     ],
 
 ];
