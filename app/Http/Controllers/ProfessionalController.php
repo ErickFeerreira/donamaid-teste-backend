@@ -22,8 +22,10 @@ class ProfessionalController extends Controller
             return response()->json($messages, 409);
         }
         $professional = Professional::create($request->all());
-        $messages['success']['client.created'] = 'Sua conta de Profissional foi registrada com sucesso!';
-        return response()->json([$messages, $professional], 201);
+        $messages['success']['professional.created'] = 'Sua conta de Profissional foi registrada com sucesso!';
+        $response['professional'] = $professional;
+        $response['messages'] = $messages;
+        return response()->json($response, 201);
     }
     public function delete ($id) {
         $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
@@ -32,11 +34,11 @@ class ProfessionalController extends Controller
             $professional = Professional::where('id', $id)->first();
             $nome = $professional->nome;
             $professional->delete();
-            $messages['success']['order.deleted'] = "Profissional ".$nome." de ID ".$id." foi deletado com sucesso";
+            $messages['success']['professional.deleted'] = "Profissional ".$nome." de ID ".$id." foi deletado com sucesso";
 
             return response()->json($messages, 200);
          } else {
-            $messages['errors']['order.unknown'] = "Não há Profissional com este ID";
+            $messages['errors']['professional.unknown'] = "Não há Profissional com este ID";
             return response()->json($messages, 404);
          }
     }
@@ -66,8 +68,9 @@ class ProfessionalController extends Controller
 
             $professional->save();
             $messages['success']['professional.updated'] = "Dados do Professional atualizados com sucesso";
-
-            return response()->json([$messages, $professional], 200);
+            $response['professional'] = $professional;
+            $response['messages'] = $messages;
+            return response()->json($response, 200);
             } else {
                 $messages['errors']['professional.unknown'] = "Não há Profissional com este ID.";
                 return response()->json($messages, 404);

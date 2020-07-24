@@ -47,8 +47,9 @@ class ClientController extends Controller
 
         }
         $messages['success']['client.created'] = 'Você foi registrado com sucesso!';
-        
-        return response()->json([$client, $messages], 201);
+        $response['client'] = $client;
+        $response['messages'] = $messages;
+        return response()->json($response, 201);
     }
     public function delete ($id) {
         $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
@@ -107,10 +108,11 @@ class ClientController extends Controller
                  }
             }
             $client->save();
+
             $messages['success']['client.updated'] = "Os dados foram atualizados com sucesso";
-            return response()->json([
-               $messages, $client
-            ], 200);
+            $response['client'] = $client;
+            $response['messages'] = $messages;
+            return response()->json($response, 200);
         } else {
             $messages['errors']['client.unknown'] = "Não há Cliente com este ID.";
             return response()->json($messages, 404);  

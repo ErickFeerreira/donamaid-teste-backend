@@ -26,7 +26,9 @@ class AdressController extends Controller
         if ($cepResponse->isOk()) {
             $adress = AdressController::createNewAdressToClient($client, $request, $cepResponse);
             $messages['success']['adress.created'] = 'Seu endereço foi registrado com sucesso!';
-            return response()->json([$messages, $adress], 201);
+            $response['adress'] = $adress;
+            $response['messages'] = $messages;
+            return response()->json($response, 201);
         } else {
             $messages['errors']['cep.unknown'] = 'CEP não encontrado';
         }
@@ -105,9 +107,12 @@ class AdressController extends Controller
 
             }
             $adress->save();
+
             $messages['success']['adress.updated'] = "Dados do Endereço atualizados com sucesso";
 
-            return response()->json([$messages, $adress], 200);
+            $response['adress'] = $adress;
+            $response['messages'] = $messages;
+            return response()->json($response, 200);
         } else {
                 $messages['errors']['adress.unknown'] = "Não há Endereço com este ID.";
                 return response()->json($messages, 404);

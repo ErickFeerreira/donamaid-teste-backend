@@ -36,8 +36,9 @@ class OrderController extends Controller
         $order->horario_inicial = $request->horario_inicial;
         $order->save();
         $messages['success']['order.created'] = 'Seu Pedido de Limpeza foi agendado!';
-
-        return response()->json([$messages, $order], 201);
+        $response['order'] = $order;
+        $response['messages'] = $messages;
+        return response()->json($response, 201);
     }
     public function delete ($id) {
         $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
@@ -130,10 +131,13 @@ class OrderController extends Controller
                 $newformatDate = $dataTyped[2]."-".$dataTyped[1]."-".$dataTyped[0];
                 $order->dia =  $newformatDate;
             }
-
             $order->save();
+
             $messages['success']['order.updated'] = "Dados do Contrato atualizados com sucesso";
-            return response()->json([$messages, $order], 200);
+
+            $response['order'] = $order;
+            $response['messages'] = $messages;
+            return response()->json($response, 200);
             } else {
                 $messages['errors']['order.unknown'] = "Não há Contrato com este ID.";
                 return response()->json([
