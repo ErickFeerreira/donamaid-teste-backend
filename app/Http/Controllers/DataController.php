@@ -8,14 +8,14 @@ namespace App\Http\Controllers;
     {
             public function open() 
             {
-                $data = "This data is open and can be accessed without the client being authenticated";
+                $data = "Este dado é publico";
                 return response()->json(compact('data'),200);
 
             }
 
             public function closed() 
             {
-                $data = "Only authorized users can see this";
+                $data = "Somente usuários autorizados podem acessar este dado";
                 return response()->json(compact('data'),200);
             }
     }
