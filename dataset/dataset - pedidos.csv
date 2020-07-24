@@ -1,0 +1,15 @@
+cliente.id,cliente.cpf,cliente.nome,cliente.email,profissional.id,profissional.cpf,profissional.nome,profissional.email,pedido.id,pedido.horario_inicial,pedido.duracao,pedido.endereco,pedido.cliente,pedido.profissional,endereco.id,endereco.rua,endereco.numero,endereco.complemento,endereco.cep,endereco.cidade,endereco.estado,endereco.pais
+0,11644235099,Lurdes Pereira,luderspp@hotmail.com,0,18909428040,Giovana Souza Araujo,giovanasouzaaraujo@mail.com,1,8,4,1,0,0,1,Rua Dona Darcy Vargas,1775,,96076050,Pelotas,RS,Brasil
+1,58469549014,Paola Soares,p.soares@gmail.com,1,80084505095,Raissa Silva Azevedo,raissasilvaazevedo@mail.com,2,12,7,2,1,1,2,Travessa Oito,31,,96075852,Pelotas,RS,Brasil
+2,68369919022,Kelly Beltrame,beltrame.kelly@gmail.com,1,80084505095,Raissa Silva Azevedo,raissasilvaazevedo@mail.com,3,9,3,3,2,1,3,Rua Doutor Orlando Corrêa Azevedo,1903,202 bloco-b,96087015,Pelotas,RS,Brasil
+3,23115241003,Ana Luiza Costa,aninha_luizacosta@hotmail.com,2,25592381018,Isabelle Oliveira Alves,isabellealiveiraalves@mail.com,4,8,8,4,3,2,4,Rua Doutor Henrique Martins Chaves,195,301,96055530,Pelotas,RS,Brasil
+4,16017575066,Carla Santos Pereira,carlinha_2015_pereira@hotmail.com,3,30321291093,Beatriz Cardoso Almeida,beatrizaardosoalmeida@mail.com,5,17,2,5,4,3,5,Rua Pedro Álvares Cabral,1788,404,96015580,Pelotas,RS,Brasil
+5,56717452099,Letícia Scherer,lety_scherer@gmail.com,4,29395779004,Vitór Lima Santos,vitorlimasantos@mail.com,6,14,5,6,5,4,6,Rua Mimosa Assumpção,301,,96090570,Pelotas,RS,Brasil
+6,79607930002,João Henrique Rodrigues,jhrodriges@gmail.com,2,25592381018,Isabelle Oliveira Alves,isabellealiveiraalves@mail.com,7,14,4,7,6,2,7,Rua Doutor Cassiano,566,,96015700,Pelotas,RS,Brasil
+7,38183725007,Cristiane Silveira Pinto,cris.silveira.p@bol.com.br,3,30321291093,Beatriz Cardoso Almeida,beatrizaardosoalmeida@mail.com,8,8,4,9,7,3,9,Avenida Ulysses Silveira Guimarães,330,302,96081150,Pelotas,RS,Brasil
+1,58469549014,Paola Soares,p.soares@gmail.com,2,25592381018,Isabelle Oliveira Alves,isabellealiveiraalves@mail.com,9,11,5,2,1,2,2,Travessa Oito,31,,96075852,Pelotas,RS,Brasil
+8,68887483086,Carlos Braga de Lima,carlos.lima@gmail.com,2,25592381018,Isabelle Oliveira Alves,isabellealiveiraalves@mail.com,10,9,8,8,8,2,8,Rua Paulo Simões Lopes,447,,96050240,Pelotas,RS,Brasil
+3,23115241003,Ana Luiza Costa,aninha_luizacosta@hotmail.com,2,25592381018,Isabelle Oliveira Alves,isabellealiveiraalves@mail.com,11,9,7,4,3,2,4,Rua Doutor Henrique Martins Chaves,195,301,96055530,Pelotas,RS,Brasil
+9,65751623045,George Souza Soares,gsssoares@gmail.com,1,80084505095,Raissa Silva Azevedo,raissasilvaazevedo@mail.com,12,13,3,7,9,1,7,Rua Doutor Cassiano,330,202,96015700,Pelotas,RS,Brasil
+2,68369919022,Kelly Beltrame,beltrame.kelly@gmail.com,4,29395779004,Vitór Lima Santos,vitorlimasantos@mail.com,13,12,4,3,2,4,3,Rua Doutor Orlando Corrêa Azevedo,1903,202,96087015,Pelotas,RS,Brasil
+0,11644235099,Lurdes Pereira,luderspp@hotmail.com,0,18909428040,Giovana Souza Araujo,giovanasouzaaraujo@mail.com,14,11,6,1,0,0,1,Rua Dona Darcy Vargas,1775,,96076050,Pelotas,RS,Brasil
