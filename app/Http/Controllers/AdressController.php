@@ -51,7 +51,7 @@ class AdressController extends Controller
         $messages = array(); $messages['errors'] = array(); $messages['success'] = array();
 
         if (Adress::where('id', $id)->exists()) {
-            $adress = Client::where('id', $id)->get();
+            $adress = Adress::where('id', $id)->get();
             return response($adress, 200);
         } else {
         $messages['errors']['adress.unknown'] = "Não há Endereço com este ID";
