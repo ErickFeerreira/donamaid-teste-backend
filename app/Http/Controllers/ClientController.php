@@ -29,8 +29,8 @@ class ClientController extends Controller
         $client->save();
 
         //Flexiona se é necessário ou não criar um novo endereço vinculado a um cliente na hora do Create
-        if ((!is_null($request->novo_endereco_cep) && !is_null($request->novo_endereco_numero))){   
-            $cepResponse = \Canducci\Cep\Facades\Cep::find($request->novo_endereco_cep );
+        if ((!is_null($request->cep) && !is_null($request->numero))){   
+            $cepResponse = \Canducci\Cep\Facades\Cep::find($request->cep );
             if ($cepResponse->isOk()) 
             {
                 AdressController::createNewAdressToClient($client, $request, $cepResponse);
@@ -41,7 +41,7 @@ class ClientController extends Controller
             if (!empty($messages['errors'])){
                 return response()->json($messages, 409);
             }
-        } else if ((!is_null($request->novo_endereco_cep) && is_null($request->novo_endereco_numero))){
+        } else if ((!is_null($request->cep) && is_null($request->numero))){
             $messages['errors']['cep.unknown'] = 'Você informou um CEP mas não o número de sua residência. Ambos são necessários para o registro devido do seu endereço';
             return response()->json($messages, 409);
 
@@ -92,9 +92,9 @@ class ClientController extends Controller
             $client->email = is_null($request->email) ? $client->email : $request->email;
             $client->enderecos = is_null($request->enderecos) ? $client->enderecos : $request->enderecos;
 
-            if ((!is_null($request->novo_endereco_cep) && !is_null($request->novo_endereco_numero))){
+            if ((!is_null($request->cep) && !is_null($request->numero))){
                 
-                $cepResponse = \Canducci\Cep\Facades\Cep::find($request->novo_endereco_cep );
+                $cepResponse = \Canducci\Cep\Facades\Cep::find($request->cep );
                 if ($cepResponse->isOk()) 
                 {
                    AdressController::createNewAdressToClient($client, $request, $cepResponse);
