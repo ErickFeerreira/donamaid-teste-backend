@@ -9,7 +9,7 @@ Esse repositório deve ser forkado para desenvolvimento do teste pelo candidato 
 
 
 **Endereço para a API:**
-    https://maidtestapp.herokuapp.com/
+    https://maidtestapp.herokuapp.com/api/
 
 # Dataset:
 [Dataset](https://github.com/jschneiders/donamaid-teste-backend/blob/master/dataset/dataset%20-%20pedidos.csv)
